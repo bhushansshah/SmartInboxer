@@ -19,8 +19,8 @@ This is the frontend for **SmartInbox**, built with **React**, **Vite**, **Tailw
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/smartinbox-frontend.git
-cd smartinbox-frontend
+git clone git@github.com:your-username/SmartInboxer.git
+cd SmartInboxer/frontend
 ```
 2. **Install Dependencies**
 ```bash
