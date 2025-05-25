@@ -11,8 +11,6 @@ class MongoUserRepository(UserRepository):
 
     async def create_user(self, user: User) -> dict:
         result = await self.collection.insert_one(user.model_dump(by_alias=True, exclude_none=True))
-        print(type(result))
-        print(result)
         return {"success": result.acknowledged, "_id": str(result.inserted_id)}
 
     async def delete_user(self, user_id: str) -> bool:
