@@ -1,4 +1,6 @@
 import { useState } from "react";
+import {useGoogleLogin} from "@react-oauth/google"
+import { googleLoginAuth } from "../api";
 import { primitiveLoginAuth } from "../api"
 import { useNavigate } from "react-router-dom";
 
@@ -24,10 +26,43 @@ export default function LoginPage() {
     const loginToken = response.loginToken;
     const _id = response._id
     if(loginToken != "" && _id != ""){
-      localStorage.setItem("smartInboxer", JSON.stringify({loginToken, user_id: _id}));
+      localStorage.setItem("smart-inboxer", JSON.stringify({loginToken, user_id: _id}));
       navigate("/home")
     }
   }
+
+  const responseGoogle = async (responses) => {
+          try{
+              const {code} = responses;
+              
+              const response = await googleLoginAuth(code);
+              console.log("Response from backend: ", response);
+  
+              if(response.status == "error"){
+                alert(response.message);
+                return;
+              }
+              const loginToken = response.loginToken;
+              const _id = response._id;
+              if(loginToken != "" && _id != ""){
+                localStorage.setItem("smart-inboxer", JSON.stringify({
+                  loginToken, 
+                  user_id: _id
+                }))
+                navigate("/home")
+              }
+  
+          }
+          catch(error){
+              console.log("Error while google oauth: error", error)
+          }
+  }
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: "auth-code",
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 to-gray-800 flex items-center justify-center">
@@ -59,7 +94,10 @@ export default function LoginPage() {
 
         <div className="my-6 text-center text-gray-400">or</div>
 
-        <button className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-xl hover:bg-gray-100 transition duration-200">
+        <button 
+          className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-xl hover:bg-gray-100 transition duration-200"
+          onClick={googleLogin}
+        >
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5" />
           Log in with Google
         </button>

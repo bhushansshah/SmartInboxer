@@ -4,7 +4,7 @@ export default function Home() {
     const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
-        const data = localStorage.getItem("smartInboxer");
+        const data = localStorage.getItem("smart-inboxer");
         if (data) {
         const user = JSON.parse(data);
         console.log(user)
@@ -12,14 +12,14 @@ export default function Home() {
         }
         else{
         alert("Login required");
-        navigate("/login-new");
+        navigate("/login");
         }
     }
     , [])
     const handleLogout = () => {
         localStorage.removeItem("smartInboxer");
         setUserInfo(null);
-        navigate("/login-new");
+        navigate("/login");
     }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50">

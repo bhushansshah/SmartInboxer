@@ -9,9 +9,9 @@ import Dashboard from './components/Dashboard'
 import PageNotFound from './components/PageNotFound'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
-const GoogleAuthWrapper = () => {
-  return (<GoogleOAuthProvider clientId='693643502118-90qerhsc6t58t43prim4tgl6gn8cpiuk.apps.googleusercontent.com'>
-    <Login></Login>
+const GoogleAuthWrapper = ({children}) => {
+  return (<GoogleOAuthProvider clientId='1023717120219-qic1sqf2tj7drpi6p940gc6nukqo4q9t.apps.googleusercontent.com'>
+    {children}
   </GoogleOAuthProvider>)
 }
 
@@ -22,10 +22,9 @@ function App() {
       <BrowserRouter>
         <Navbar/>
         <Routes>
-          <Route path='/signup-new' element={<SignUpPage/>}/>
-          <Route path="/login-new" element={<LoginPage/>}/>
+          <Route path='/signup' element={<GoogleAuthWrapper><SignUpPage/></GoogleAuthWrapper>}/>
           <Route path="/home" element={<Home/>} />
-          <Route path="/login" element={<GoogleAuthWrapper/>} />
+          <Route path="/login" element={<GoogleAuthWrapper><LoginPage/></GoogleAuthWrapper>} />
           <Route path="/" element={<Navigate to='/login' />} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path='*' element={<PageNotFound/>}/>

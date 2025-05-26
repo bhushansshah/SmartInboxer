@@ -6,7 +6,9 @@ const api = axios.create({
 
 export const googleLoginAuth = async (code) => {
     try {
-        const response = await api.post(`/google/login?code=${code}`);
+        const response = await api.post('/google/login', {
+            code
+        });
         return response.data;
     } catch (error) {
         console.error('Error during login:', error);

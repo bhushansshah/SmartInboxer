@@ -1,15 +1,75 @@
 from fastapi import APIRouter
 from adapters.db.mongodb.user_repository import mongo_user_repository
 from schemas.signup import PrimitiveSignupRequest
-from schemas.login import PrimitiveLoginRequest
+from schemas.login import PrimitiveLoginRequest, GoogleLoginRequest
 from schemas.user import User
 from utils.auth import hash_password, create_jwt, verify_password
+import httpx
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+from config.settings import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/google/login")
-async def google_login():
-    return {"message": "Dummy Google OAuth login"}
+async def google_login(payload: GoogleLoginRequest):
+    try:
+        code = payload.code
+
+        # Exchange code for tokens
+        async with httpx.AsyncClient() as client:
+            token_res = await client.post(
+                "https://oauth2.googleapis.com/token",
+                data={
+                    "code": code,
+                    "client_id": settings.google_client_id,
+                    "client_secret": settings.google_client_secret,
+                    "redirect_uri": "postmessage",
+                    "grant_type": "authorization_code",
+                },
+                headers={"Content-Type": "application/x-www-form-urlencoded"}
+            )
+
+        if token_res.status_code != 200:
+            print("Token exchange response:", token_res.text)
+            return {"status": "error", "message": "Failed to fetch Google tokens."}
+
+        tokens = token_res.json()
+        idinfo = id_token.verify_oauth2_token(
+            tokens["id_token"],
+            google_requests.Request(),
+            settings.google_client_id,
+        )
+
+        email = idinfo.get("email")
+        if not email:
+            return {"status": "error", "message": "Unable to retrieve email from ID token."}
+
+        # Check if user exists in DB
+        users = await mongo_user_repository.get_all_users()
+        user = next((u for u in users if u.email == email), None)
+
+        # If user does not exist, create one
+        if not user:
+            new_user = User(email=email)
+            print("creating a new user")
+            result = await mongo_user_repository.create_user(new_user)
+            user_id = result["_id"]
+        else:
+            user_id = user.user_id
+
+        jwt_token = create_jwt({"email": email})
+
+        return {
+            "status": "success",
+            "_id": user_id,
+            "login_token": jwt_token
+        }
+
+    except Exception as e:
+        return {"status": "error", "message": f"Exception occurred: {str(e)}"}
+
+    
 
 @router.post("/login")
 async def primitive_login(payload: PrimitiveLoginRequest):

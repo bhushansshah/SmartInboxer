@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { primitiveSignupAuth } from "../api"
+import {useGoogleLogin} from "@react-oauth/google"
+import { primitiveSignupAuth, googleLoginAuth } from "../api"
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -32,6 +33,39 @@ export default function SignUpPage() {
       navigate("/home")
     }
   }
+
+  const responseGoogle = async (responses) => {
+          try{
+              const {code} = responses;
+              
+              const response = await googleLoginAuth(code);
+              console.log("Response from backend: ", response);
+  
+              if(response.status == "error"){
+                alert(response.message);
+                return;
+              }
+              const loginToken = response.loginToken;
+              const _id = response._id;
+              if(loginToken != "" && _id != ""){
+                localStorage.setItem("smart-inboxer", JSON.stringify({
+                  loginToken, 
+                  user_id: _id
+                }))
+                navigate("/home")
+              }
+  
+          }
+          catch(error){
+              console.log("Error while google oauth: error", error)
+          }
+  }
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onError: responseGoogle,
+    flow: "auth-code",
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 to-gray-800 flex flex-col">
@@ -66,6 +100,15 @@ export default function SignUpPage() {
           <button className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl transition duration-200" onClick={primitiveSignup}>
             Sign Up
           </button>
+          <div className="my-6 text-center text-gray-400">or</div>
+
+        <button 
+          className="w-full flex items-center justify-center gap-2 bg-white text-black font-semibold py-3 rounded-xl hover:bg-gray-100 transition duration-200"
+          onClick={googleLogin}
+        >
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5" />
+          Log in with Google
+        </button>
 
           <p className="mt-6 text-sm text-center text-gray-500">
             Already have an account? <Link to="/login" className="text-purple-500 hover:underline">Login</Link>

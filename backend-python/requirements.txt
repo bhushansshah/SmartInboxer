@@ -8,3 +8,6 @@ fastapi
 uvicorn 
 passlib[bcrypt] 
 python-jose
+httpx 
+google-auth
+requests

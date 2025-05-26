@@ -10,7 +10,7 @@ export default function Navbar() {
       <h1 className="text-2xl font-bold text-purple-500">SmartInbox</h1>
       <div className="space-x-6 text-sm font-medium">
         <Link
-          to="/login-new"
+          to="/login"
           className={`hover:text-purple-400 ${
             isActive("/login") ? "text-purple-500 underline" : ""
           }`}
@@ -18,7 +18,7 @@ export default function Navbar() {
           Login
         </Link>
         <Link
-          to="/signup-new"
+          to="/signup"
           className={`hover:text-purple-400 ${
             isActive("/signup") ? "text-purple-500 underline" : ""
           }`}
