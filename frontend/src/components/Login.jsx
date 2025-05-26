@@ -1,7 +1,7 @@
 // Component for login
 import React from 'react'
 import {useGoogleLogin} from "@react-oauth/google"
-import { loginAuth } from '../api';
+import { googleLoginAuth } from '../api';
 import {useNavigate} from 'react-router-dom'
 function Login() {
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ function Login() {
         try{
             const {code} = responses;
             
-            const response = await loginAuth(code);
+            const response = await googleLoginAuth(code);
             console.log("Response from backend: ", response);
 
             const token = response.token;

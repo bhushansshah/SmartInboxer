@@ -4,3 +4,7 @@ python-dotenv
 motor
 pymongo
 bson
+fastapi 
+uvicorn 
+passlib[bcrypt] 
+python-jose

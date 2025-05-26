@@ -11,7 +11,17 @@ class MongoUserRepository(UserRepository):
 
     async def create_user(self, user: User) -> dict:
         result = await self.collection.insert_one(user.model_dump(by_alias=True, exclude_none=True))
-        return {"success": result.acknowledged, "_id": str(result.inserted_id)}
+
+        if result.acknowledged:
+            return {
+                    "status": True, 
+                    "_id": str(result.inserted_id)
+            }
+        else:
+            return {
+                "status": False,
+                "message": "User not created."
+            }
 
     async def delete_user(self, user_id: str) -> bool:
         result = await self.collection.delete_one({"_id": ObjectId(user_id)})
@@ -30,3 +40,5 @@ class MongoUserRepository(UserRepository):
         async for document in cursor:
             users.append(User(**document))
         return users
+
+mongo_user_repository = MongoUserRepository()

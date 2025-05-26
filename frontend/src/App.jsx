@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Login from './components/Login'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignupPage'
+import Home from "./pages/Home"
 import Dashboard from './components/Dashboard'
 import PageNotFound from './components/PageNotFound'
 import { GoogleOAuthProvider } from '@react-oauth/google'
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path='/signup-new' element={<SignUpPage/>}/>
           <Route path="/login-new" element={<LoginPage/>}/>
+          <Route path="/home" element={<Home/>} />
           <Route path="/login" element={<GoogleAuthWrapper/>} />
           <Route path="/" element={<Navigate to='/login' />} />
           <Route path="/dashboard" element={<Dashboard/>} />
