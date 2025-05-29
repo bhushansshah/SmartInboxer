@@ -1,11 +1,9 @@
 // import './App.css'
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Login from './components/Login'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignupPage'
 import Home from "./pages/Home"
-import Dashboard from './components/Dashboard'
 import PageNotFound from './components/PageNotFound'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
@@ -26,7 +24,6 @@ function App() {
           <Route path="/home" element={<Home/>} />
           <Route path="/login" element={<GoogleAuthWrapper><LoginPage/></GoogleAuthWrapper>} />
           <Route path="/" element={<Navigate to='/login' />} />
-          <Route path="/dashboard" element={<Dashboard/>} />
           <Route path='*' element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
