@@ -23,10 +23,10 @@ export default function LoginPage() {
       return;
     }
 
-    const loginToken = response.loginToken;
-    const _id = response._id
-    if(loginToken != "" && _id != ""){
-      localStorage.setItem("smart-inboxer", JSON.stringify({loginToken, user_id: _id}));
+    const loginToken = response.login_token;
+    const user = response.user;
+    if(loginToken != "" && user != null){
+      localStorage.setItem("smart-inboxer", JSON.stringify({login_token: loginToken, user: user}));
       navigate("/home")
     }
   }
@@ -42,12 +42,12 @@ export default function LoginPage() {
                 alert(response.message);
                 return;
               }
-              const loginToken = response.loginToken;
-              const _id = response._id;
-              if(loginToken != "" && _id != ""){
+              const loginToken = response.login_token;
+              const user = response.user;
+              if(loginToken != null && user != null){
                 localStorage.setItem("smart-inboxer", JSON.stringify({
-                  loginToken, 
-                  user_id: _id
+                  login_token: loginToken,
+                  user: user
                 }))
                 navigate("/home")
               }

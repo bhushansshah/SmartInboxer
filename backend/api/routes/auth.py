@@ -42,6 +42,10 @@ async def google_login(payload: GoogleLoginRequest):
         )
 
         email = idinfo.get("email")
+        name = idinfo.get("given_name")
+        if name is None:
+            name = idinfo.get("name")
+
         if not email:
             return {"status": "error", "message": "Unable to retrieve email from ID token."}
 
@@ -51,18 +55,19 @@ async def google_login(payload: GoogleLoginRequest):
 
         # If user does not exist, create one
         if not user:
-            new_user = User(email=email)
+            new_user = User(email=email, name=name)
             print("creating a new user")
             result = await mongo_user_repository.create_user(new_user)
             user_id = result["_id"]
         else:
             user_id = user.user_id
 
-        jwt_token = create_jwt({"email": email})
+        user = await mongo_user_repository.get_user_by_id(user_id)
+        jwt_token = create_jwt({"user": user.model_dump(by_alias=True, exclude_none=True)})
 
         return {
             "status": "success",
-            "_id": user_id,
+            "user": user.model_dump(by_alias=True, exclude_none=True),
             "login_token": jwt_token
         }
 
@@ -97,11 +102,11 @@ async def primitive_login(payload: PrimitiveLoginRequest):
     
     if verify_password(password, potential_user.password_hash):
         user_jwt = create_jwt({
-            "username": username        
+            "user": potential_user.model_dump(by_alias=True, exclude_none=True)
         })
         return {
             "status": "success",
-            "_id": potential_user.user_id,
+            "user": potential_user.model_dump(by_alias=True, exclude_none=True),
             "login_token": user_jwt 
         }
     else:
@@ -137,19 +142,20 @@ async def signup(payload: PrimitiveSignupRequest):
     password_hash = hash_password(password)
     user = {
         "username": username,
-        "password_hash": password_hash
+        "password_hash": password_hash,
+        "name": "Kevin"
     }
     
     user = User(**user)
     response = await mongo_user_repository.create_user(user)
     if response['status']:
         user_jwt = create_jwt({
-            "username": username
+            "user": user.model_dump(by_alias=True, exclude_none=True)
         })
 
         return {
             "status": "success",
-            "_id": response['_id'],
+            "user": user.model_dump(by_alias=True, exclude_none=True),
             "login_token": user_jwt 
         }
     else:
