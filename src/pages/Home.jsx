@@ -16,18 +16,22 @@ export default function Home() {
     const navigate = useNavigate();
     
     const colors = [
-        // Reds
-        "#EF4444", "#DC2626", "#B91C1C",
+        // Reds and Oranges
+        "#EF4444", "#F97316", "#EA580C",
         // Blues
-        "#3B82F6", "#2563EB", "#1D4ED8",
+        "#3B82F6", "#0EA5E9", "#06B6D4",
         // Greens
-        "#10B981", "#059669", "#047857",
-        // Purples
-        "#A855F7", "#7C3AED", "#6D28D9",
-        // Yellows
-        "#F59E0B", "#D97706", "#B45309",
-        // Pinks
-        "#EC4899", "#DB2777", "#BE185D"
+        "#10B981", "#22C55E", "#84CC16",
+        // Purples and Pinks
+        "#A855F7", "#D946EF", "#EC4899",
+        // Yellows and Ambers
+        "#EAB308", "#F59E0B", "#F97316",
+        // Teals and Cyans
+        "#14B8A6", "#06B6D4", "#0EA5E9",
+        // Indigos and Violets
+        "#6366F1", "#8B5CF6", "#A855F7",
+        // Warm Grays
+        "#78716C", "#57534E", "#44403C"
     ];
 
     useEffect(() => {
@@ -139,7 +143,7 @@ export default function Home() {
                             </div>
                             
                             {showColorPicker && (
-                                <div className="absolute top-full mt-2 p-4 bg-zinc-800 rounded-xl border border-zinc-700 grid grid-cols-6 gap-4 z-10">
+                                <div className="absolute top-full mt-2 p-4 bg-zinc-800 rounded-xl border border-zinc-700 grid grid-cols-3 gap-4 z-10">
                                     {colors.map(color => (
                                         <div
                                             key={color}
