@@ -4,17 +4,31 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
     const [userInfo, setUserInfo] = useState(null);
     const [labels, setLabels] = useState([
-        { id: 1, name: "Important", color: "red" },
-        { id: 2, name: "Work", color: "blue" },
-        { id: 3, name: "Personal", color: "green" }
+        { id: 1, name: "Important", color: "#EF4444" },
+        { id: 2, name: "Work", color: "#3B82F6" },
+        { id: 3, name: "Personal", color: "#10B981" }
     ]);
     const [newLabel, setNewLabel] = useState("");
-    const [selectedColor, setSelectedColor] = useState("purple");
+    const [selectedColor, setSelectedColor] = useState("#A855F7");
     const [isGmailConnected, setIsGmailConnected] = useState(false);
+    const [showColorPicker, setShowColorPicker] = useState(false);
     
     const navigate = useNavigate();
     
-    const colors = ["purple", "red", "blue", "green", "yellow", "pink"];
+    const colors = [
+        // Reds
+        "#EF4444", "#DC2626", "#B91C1C",
+        // Blues
+        "#3B82F6", "#2563EB", "#1D4ED8",
+        // Greens
+        "#10B981", "#059669", "#047857",
+        // Purples
+        "#A855F7", "#7C3AED", "#6D28D9",
+        // Yellows
+        "#F59E0B", "#D97706", "#B45309",
+        // Pinks
+        "#EC4899", "#DB2777", "#BE185D"
+    ];
 
     useEffect(() => {
         const data = localStorage.getItem("smart-inboxer");
@@ -84,7 +98,7 @@ export default function Home() {
                         </div>
                         <button
                             onClick={handleConnectGmail}
-                            className={`px-6 py-3 rounded-xl font-semibold transition duration-200 flex items-center gap-2 ${
+                            className={`px-6 py-3 rounded-xl font-semibold transition duration-200 flex items-center gap-2 cursor-pointer ${
                                 isGmailConnected
                                     ? "bg-green-600 hover:bg-green-700"
                                     : "bg-purple-600 hover:bg-purple-700"
@@ -110,20 +124,39 @@ export default function Home() {
                             value={newLabel}
                             onChange={(e) => setNewLabel(e.target.value)}
                             placeholder="Enter label name"
-                            className="flex-1 px-4 py-2 rounded-xl bg-zinc-800 text-white placeholder-gray-400 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+                            className="flex-1 px-4 py-2 rounded-xl bg-zinc-800 text-white placeholder-gray-400 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-text"
                         />
-                        <select
-                            value={selectedColor}
-                            onChange={(e) => setSelectedColor(e.target.value)}
-                            className="px-4 py-2 rounded-xl bg-zinc-800 text-white border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
-                        >
-                            {colors.map(color => (
-                                <option key={color} value={color}>{color}</option>
-                            ))}
-                        </select>
+                        <div className="relative">
+                            <div
+                                onClick={() => setShowColorPicker(!showColorPicker)}
+                                className="px-4 py-2 rounded-xl bg-zinc-800 text-white border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-purple-600 cursor-pointer flex items-center gap-2"
+                            >
+                                <div 
+                                    className="w-4 h-4 rounded-full" 
+                                    style={{ backgroundColor: selectedColor }}
+                                ></div>
+                                <span>Pick Color</span>
+                            </div>
+                            
+                            {showColorPicker && (
+                                <div className="absolute top-full mt-2 p-2 bg-zinc-800 rounded-xl border border-zinc-700 grid grid-cols-6 gap-2 z-10">
+                                    {colors.map(color => (
+                                        <div
+                                            key={color}
+                                            onClick={() => {
+                                                setSelectedColor(color);
+                                                setShowColorPicker(false);
+                                            }}
+                                            className="w-6 h-6 rounded-full cursor-pointer hover:ring-2 hover:ring-white transition duration-200"
+                                            style={{ backgroundColor: color }}
+                                        ></div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                         <button
                             onClick={handleAddLabel}
-                            className="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-xl font-semibold transition duration-200 flex items-center gap-2"
+                            className="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-xl font-semibold transition duration-200 flex items-center gap-2 cursor-pointer"
                         >
                             <span>➕</span>
                             Add Label
@@ -146,7 +179,7 @@ export default function Home() {
                                 </div>
                                 <button
                                     onClick={() => handleDeleteLabel(label.id)}
-                                    className="text-red-500 hover:text-red-400 transition duration-200"
+                                    className="text-red-500 hover:text-red-400 transition duration-200 cursor-pointer"
                                 >
                                     🗑️
                                 </button>
@@ -159,7 +192,7 @@ export default function Home() {
                 <div className="flex justify-end">
                     <button
                         onClick={handleLogout}
-                        className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition duration-200 flex items-center gap-2"
+                        className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition duration-200 flex items-center gap-2 cursor-pointer"
                     >
                         <span>🚪</span>
                         Logout
