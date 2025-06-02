@@ -2,7 +2,7 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
 import Navbar from './components/Navbar'
 import LoginPage from './pages/LoginPage'
-import SignUpPage from './pages/SignupPage'
+import SignUpPage from './pages/SignUpPage'
 import Home from "./pages/Home"
 import PageNotFound from './components/PageNotFound'
 import { GoogleOAuthProvider } from '@react-oauth/google'
