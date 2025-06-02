@@ -1,0 +1,50 @@
+    Health Related Fields - all categorical fields
+    ok HasHypertension: Indicates if the user has high blood pressure. 
+    ok HasAsthma: Indicates if the user has been diagnosed with asthma. 
+    ok HasChronicKidneyDisease: Indicates if the user has chronic kidney issues. 
+    ok HasCancerHistory: Indicates if the user has had any form of cancer.
+    ok IsObese: Based on BMI, indicates obesity status.
+    ok HasHighCholesterol: Indicates if the user has high cholesterol levels.
+    ok HasAutoimmuneDisorders: Indicates presence of autoimmune conditions.
+    ok HasThyroidDisorders: Hypothyroidism or hyperthyroidism status.
+    ok HasEpilepsy: Indicates if the user has epilepsy.
+    ok HasAnemia: Indicates if the user is anemic.
+    ok HasDigestiveIssues: Such as IBS, Crohn's disease.
+    ok HasDiabetics: Indicates diabetics
+    
+    Lifestyle Related fields - All categorical fields
+    ok PhysicalActivityLevel: Sedentary, moderately active, active. - categorical
+    ok AlcoholConsumption: Frequency and amount of alcohol intake. - categorical
+    ok SleepPattern: Average hours of sleep per night. - categorical
+    ok StressLevel: Self-assessed level of stress (low, medium, high). - categorical
+    ok TravelFrequency: How often the user travels, affecting health risks. - categorical
+    ok SunExposure: Daily time spent in the sun. - categorical
+    ok isSmoker: Smokes or not
+    
+    Allergies - All Objects - Arrays of strings
+    ok FoodAllergiesList: Specific foods the user is allergic to.
+    ok CurrentMedicationsList: Prescription medications the user is taking.
+    
+    Food Preferences
+    ok DietType: Vegetarian, vegan, omnivore, pescatarian, etc. - categorical
+    ok LactoseIntolerant: Indicates lactose intolerance. - categorical
+    ok GlutenIntolerant/CeliacDisease: Gluten sensitivity or celiac disease. - categorical
+    ok NutAllergy: Specific to nuts. - Array of strings
+    ok SeafoodAllergy: Allergic to fish or shellfish. - Array of strings
+    ok FavoriteCuisines: Types of cuisines preferred. - Array of strings
+    ok DislikedFoods: Foods the user avoids by choice. - Array of strings
+    
+    Reproducible Habits All categorical
+    ok Pregnant: Indicates if the user is currently pregnant.
+    ok Breastfeeding: Indicates if the user is breastfeeding.
+
+
+    Physical Measurement - 
+    ok BMI: Calculated Body Mass Index. - Numeric
+    ok Age: Age of the person - Numeric
+    ok gender: The sex of user. - Categorical
+    
+
+
+
+
