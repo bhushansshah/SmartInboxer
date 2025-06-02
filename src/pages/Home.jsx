@@ -139,7 +139,7 @@ export default function Home() {
                             </div>
                             
                             {showColorPicker && (
-                                <div className="absolute top-full mt-2 p-2 bg-zinc-800 rounded-xl border border-zinc-700 grid grid-cols-6 gap-2 z-10">
+                                <div className="absolute top-full mt-2 p-4 bg-zinc-800 rounded-xl border border-zinc-700 grid grid-cols-6 gap-4 z-10">
                                     {colors.map(color => (
                                         <div
                                             key={color}
@@ -147,7 +147,7 @@ export default function Home() {
                                                 setSelectedColor(color);
                                                 setShowColorPicker(false);
                                             }}
-                                            className="w-6 h-6 rounded-full cursor-pointer hover:ring-2 hover:ring-white transition duration-200"
+                                            className="w-8 h-8 rounded-full cursor-pointer hover:ring-2 hover:ring-white transition duration-200"
                                             style={{ backgroundColor: color }}
                                         ></div>
                                     ))}
