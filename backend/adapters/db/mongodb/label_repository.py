@@ -39,11 +39,13 @@ class MongoLabelRepository(LabelRepository):
         update_data = label.model_dump(by_alias=True, exclude_none=True)
         result = await self.collection.update_one({"_id": ObjectId(label_id)}, {"$set": update_data})
 
-        if result.modified_count == 1:
-            updated_label = await self.get_label_by_id(label_id)
-            return updated_label
-        else:
-            raise ValueError("Label not found or no changes made.")
+        try :
+            if result.modified_count == 1:
+                updated_label = await self.get_label_by_id(label_id)
+                return updated_label
+        except Exception as e:
+            raise e
+
     
     async def delete_label(self, label_id: str) -> bool:
         result = await self.collection.delete_one({"_id": ObjectId(label_id)})

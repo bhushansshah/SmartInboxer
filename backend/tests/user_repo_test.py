@@ -1,11 +1,10 @@
-
 import asyncio
 from schemas.user import User
 from adapters.db.mongodb.user_repository import MongoUserRepository
 
 user = {
     "name": "parth",
-    "email": "parth.shah05@gmail.com"
+    "email": "whathah05@gmail.com"
 }
 user2_id = "68322f340d2ca89441822039"
 mongo_user_repository = MongoUserRepository()

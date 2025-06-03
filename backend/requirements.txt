@@ -3,7 +3,7 @@ pydantic-settings
 python-dotenv
 motor
 pymongo
-bson
+# bson
 fastapi 
 uvicorn 
 passlib[bcrypt] 
