@@ -7,7 +7,6 @@ label = {
     "label_name": "Important",
     "label_description": "This label is used for important emails",
     "label_color": "#FF5733",  # Example color in hex format
-    # Note: The user_id should be replaced with an actual user ID from your database
     "user_id": "64a22f340d2ca89441822098"
 }
 label2_id = "683f59f4664f3bff49225263"
