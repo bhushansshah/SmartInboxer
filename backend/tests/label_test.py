@@ -1,13 +1,9 @@
-# import sys
-# import os
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import asyncio
 from schemas.label import Label
 from adapters.db.mongodb.label_repository import MongoLabelRepository
 
 label = {
-    "label_id": "683f59f4664f3bff49225263",  # Example ObjectId as string
+    "label_id": "683f59f4664f3bff49225263",
     "label_name": "Important",
     "label_description": "This label is used for important emails",
     "label_color": "#FF5733",  # Example color in hex format
