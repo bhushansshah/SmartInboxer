@@ -13,7 +13,7 @@ class LabelRepository(ABC):
         pass 
 
     @abstractmethod
-    async def get_all_labels(self, label_id: str) -> List[Label]:
+    async def get_all_labels(self) -> List[Label]:
         pass
 
     @abstractmethod

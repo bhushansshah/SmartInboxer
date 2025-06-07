@@ -2,10 +2,6 @@ from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta
 from config.settings import settings
-# Config
-SECRET_KEY = "your-secret-key"  # Change this to a secure one and keep it secret!
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
