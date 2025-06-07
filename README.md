@@ -34,9 +34,9 @@ When a user receives a new email in Gmail, SmartInboxer triggers a classificatio
 ## 📦 Features (Planned)
 
 - [x] OAuth 2.0 authentication with Gmail
-- [x] Real-time email trigger using Gmail + Pub/Sub
-- [x] Email fetching and history tracking
-- [x] LLM-powered email labeling
+- [] Real-time email trigger using Gmail + Pub/Sub
+- [] Email fetching and history tracking
+- [] LLM-powered email labeling
 - [ ] User dashboard to view categorized emails
 - [ ] Settings to manage categories and preferences
 - [ ] Data privacy and secure token storage
