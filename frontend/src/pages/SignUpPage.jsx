@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {useGoogleLogin} from "@react-oauth/google"
-import { primitiveSignupAuth, googleLoginAuth } from "../api"
+import { primitiveSignupAuth, googleLoginAuth } from "../api/auth"
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");

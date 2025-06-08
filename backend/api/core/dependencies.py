@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from backend.schemas.user import User
+from schemas.user import User
 from jose import JWTError, jwt
 from config.settings import settings
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")  # You can leave tokenUrl as-is
