@@ -1,7 +1,16 @@
 import { useState } from "react";
-
+import { connectGmail } from "../api/integrations";
 export default function GmailConnection() {
     const [isGmailConnected, setIsGmailConnected] = useState(false);
+
+    const handleConnectGmail = async () => {
+        const response = await connectGmail();
+        if (response && response.status === "success") {
+            setIsGmailConnected(true);
+        } else {
+            alert("Failed to connect Gmail");
+        }
+    };
 
     return (
         // Gmail Section
@@ -19,7 +28,7 @@ export default function GmailConnection() {
                     </div>
                 </div>
                 <button
-                    onClick={() => setIsGmailConnected(true)}
+                    onClick={async () => await handleConnectGmail()}
                     className={`px-6 py-3 rounded-xl font-semibold transition duration-200 flex items-center gap-2 cursor-pointer ${
                         isGmailConnected
                             ? "bg-green-600 hover:bg-green-700"

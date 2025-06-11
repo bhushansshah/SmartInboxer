@@ -34,6 +34,7 @@ async def google_login(payload: GoogleLoginRequest):
             return {"status": "error", "message": "Failed to fetch Google tokens."}
 
         tokens = token_res.json()
+        print('Tokens:', tokens)
         idinfo = id_token.verify_oauth2_token(
             tokens["id_token"],
             google_requests.Request(),
@@ -61,7 +62,10 @@ async def google_login(payload: GoogleLoginRequest):
             user_id = user.user_id
 
         user = await mongo_user_repository.get_user_by_id(user_id)
-        jwt_token = create_jwt({"user": user.model_dump(by_alias=True, exclude_none=True)})
+        jwt_token = create_jwt({
+                    "user": user.model_dump(by_alias=True, exclude_none=True),
+                    "tokens": tokens
+                })
 
         return {
             "status": "success",
@@ -148,7 +152,8 @@ async def signup(payload: PrimitiveSignupRequest):
     response = await mongo_user_repository.create_user(user)
     if response['status']:
         user_jwt = create_jwt({
-            "user": user.model_dump(by_alias=True, exclude_none=True)
+            "user": user.model_dump(by_alias=True, exclude_none=True),
+            "tokens": tokens
         })
 
         return {

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from api.routes import auth, integrations, labels
+from api.routes import auth, integrations, labels, webhook
 app = FastAPI()
 
 @app.exception_handler(Exception)
@@ -24,7 +24,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(integrations.router)
 app.include_router(labels.router)
-
+app.include_router(webhook.router)
 @app.get("/")
 def root():
     return {"message": "API is running"}

@@ -8,7 +8,7 @@ import PageNotFound from './components/PageNotFound'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const GoogleAuthWrapper = ({children}) => {
-  return (<GoogleOAuthProvider clientId='1023717120219-qic1sqf2tj7drpi6p940gc6nukqo4q9t.apps.googleusercontent.com'>
+  return (<GoogleOAuthProvider clientId='1023717120219-ig15h3rn0g7vs465jqum177li1u557lu.apps.googleusercontent.com'>
     {children}
   </GoogleOAuthProvider>)
 }
