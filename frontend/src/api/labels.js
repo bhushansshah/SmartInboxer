@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:8000/labels";
+const API_URL = "http://localhost:8000/labels";
 
 // Helper: Get auth headers
 const getAuthHeaders = () => {
@@ -8,7 +8,7 @@ const getAuthHeaders = () => {
   if (!local_storage) {
     throw new Error("User not authenticated");
   }
-  const loginToken = JSON.parse(local_storage).loginToken;
+  const loginToken = JSON.parse(local_storage).login_token;
   if (!loginToken) {
     throw new Error("No login token found");
   }

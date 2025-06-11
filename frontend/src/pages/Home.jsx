@@ -14,17 +14,14 @@ export default function Home() {
     //     { id: 3, name: "Personal", color: "#10B981", description: "Family, friends, and subscriptions" }
     // ]);
     // const [labelBeingEdited, setLabelBeingEdited] = useState(null);
-    const [labels, setLabels, labelBeingEdited, setLabelBeingEdited] = useLabels();
+    const [labels, setLabels, labelBeingEdited, setLabelBeingEdited, addNewLabel, editLabel, delLabel] = useLabels();
     const [editModalOpen, setEditModalOpen] = useState(false);
 
+    const addNewLabelHandler = async (newLabel) => {
+        await addNewLabel(newLabel);
+    }
 
     const navigate = useNavigate();
-
-    const colors = [
-        "#EF4444", "#F97316", "#EA580C", "#3B82F6", "#0EA5E9", "#06B6D4",
-        "#10B981", "#22C55E", "#84CC16", "#A855F7", "#D946EF", "#EC4899",
-        "#EAB308", "#F59E0B", "#14B8A6", "#6366F1", "#8B5CF6", "#78716C"
-    ];
 
     useEffect(() => {
         const data = localStorage.getItem("smart-inboxer");
@@ -47,18 +44,15 @@ export default function Home() {
         setLabelBeingEdited(null);
     };
 
-    const onSaveEditModal = (updatedLabel) => {
-        setLabels(labels.map(label => {
-            if (label.id === updatedLabel.id) {
-                console.log("returning updated label:", updatedLabel);
-                return updatedLabel;
-            }
-            return label;
-        }));
+    const onSaveEditModal = async (updatedLabel) => {
+        await editLabel(labelBeingEdited['_id'], updatedLabel);
         setEditModalOpen(false);
         setLabelBeingEdited(null);
     };
 
+    const onDeleteLabelHandler = async (labelId) => {
+        await delLabel(labelId);
+    }
     const userName = userInfo?.user?.name || "User";
 
     return (
@@ -81,10 +75,10 @@ export default function Home() {
                         <h2 className="text-2xl font-bold text-white">Custom Labels</h2>
                     </div>
 
-                    <AddLabelForm />
+                    <AddLabelForm addNewLabelHandler={addNewLabelHandler} />
 
                     {/* Labels Display */}
-                    <LabelsGrid labels={labels} handleEditLabel={handleEditLabel} />
+                    <LabelsGrid labels={labels} handleEditLabel={handleEditLabel} onDeleteLabelHandler={onDeleteLabelHandler} />
                 </div>
             </div>
 

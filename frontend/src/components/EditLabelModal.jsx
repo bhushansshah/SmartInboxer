@@ -14,17 +14,17 @@ export default function EditLabelModal({ label, onSave, onClose }) {
                 <h3 className="text-xl text-white font-bold">Edit Label</h3>
                 <input
                     type="text"
-                    value={labelBeingEdited.name}
+                    value={labelBeingEdited.label_name}
                     onChange={(e) =>
-                        setLabelBeingEdited({ ...labelBeingEdited, name: e.target.value })
+                        setLabelBeingEdited({ ...labelBeingEdited, label_name: e.target.value })
                     }
                     className="w-full px-4 py-2 rounded-xl bg-zinc-800 text-white border border-zinc-700 focus:outline-none"
                     placeholder="Label name"
                 />
                 <textarea
-                    value={labelBeingEdited.description}
+                    value={labelBeingEdited.label_description}
                     onChange={(e) =>
-                        setLabelBeingEdited({ ...labelBeingEdited, description: e.target.value })
+                        setLabelBeingEdited({ ...labelBeingEdited, label_description: e.target.value })
                     }
                     className="w-full px-4 py-2 rounded-xl bg-zinc-800 text-white border border-zinc-700 focus:outline-none"
                     placeholder="Label description"
@@ -38,9 +38,9 @@ export default function EditLabelModal({ label, onSave, onClose }) {
                             <div
                                 key={color}
                                 onClick={() =>
-                                    setLabelBeingEdited({ ...labelBeingEdited, color })
+                                    setLabelBeingEdited({ ...labelBeingEdited, label_color: color })
                                 }
-                                className={`w-6 h-6 rounded-full cursor-pointer border-2 ${labelBeingEdited.color === color ? "border-white" : "border-transparent"
+                                className={`w-6 h-6 rounded-full cursor-pointer border-2 ${labelBeingEdited.label_color === color ? "border-white" : "border-transparent"
                                     }`}
                                 style={{ backgroundColor: color }}
                             />

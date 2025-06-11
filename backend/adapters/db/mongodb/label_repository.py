@@ -1,6 +1,6 @@
 from typing import List, Optional
 from bson import ObjectId
-from schemas.label import Label
+from schemas.label import Label, LabelRequest
 from app.interfaces.db.label_repository import LabelRepository
 from adapters.db.mongodb.client import labels_collection
 
@@ -35,14 +35,15 @@ class MongoLabelRepository(LabelRepository):
             labels.append(Label(**document))
         return labels
 
-    async def update_label(self, label_id: str, label: Label) -> Label:
+    async def update_label(self, label_id: str, label: LabelRequest) -> Label:
         update_data = label.model_dump(by_alias=True, exclude_none=True)
         result = await self.collection.update_one({"_id": ObjectId(label_id)}, {"$set": update_data})
-
         try :
             if result.modified_count == 1:
                 updated_label = await self.get_label_by_id(label_id)
                 return updated_label
+            if result.matched_count == 0:
+                raise ValueError("Label not updated.")
         except Exception as e:
             raise e
 

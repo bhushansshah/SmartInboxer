@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import ColorPicker from './ColorPicker';
-import { Form } from 'react-router-dom';
 
-export default function AddLabelForm() {
+export default function AddLabelForm({addNewLabelHandler}) {
     const [newLabel, setNewLabel] = useState("");
     const [newDescription, setNewDescription] = useState("");
     const [selectedColor, setSelectedColor] = useState("#A855F7");
@@ -16,18 +14,14 @@ export default function AddLabelForm() {
 
     const handleAddLabel = () => {
         if (newLabel.trim()) {
-            // setLabels([
-            //     ...labels,
-            //     {
-            //         id: labels.length + 1,
-            //         name: newLabel,
-            //         description: newDescription,
-            //         color: selectedColor
-            //     }
-            // ]);
-            setNewLabel("");
-            setNewDescription("");
+            addNewLabelHandler({
+                label_name: newLabel,
+                label_description: newDescription,
+                label_color: selectedColor
+            });
         }
+        setNewLabel("");
+        setNewDescription("");
     };
 
     return (

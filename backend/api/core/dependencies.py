@@ -10,6 +10,7 @@ ALGORITHM = settings.auth_hash_algorithm
 
 async def verify_user_logged_in(token: str = Depends(oauth2_scheme)):
     try:
+        print("Verifying user token:", token)
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user: str = payload.get("user")
         if user is None:

@@ -31,7 +31,6 @@ async def google_login(payload: GoogleLoginRequest):
             )
 
         if token_res.status_code != 200:
-            print("Token exchange response:", token_res.text)
             return {"status": "error", "message": "Failed to fetch Google tokens."}
 
         tokens = token_res.json()
@@ -56,7 +55,6 @@ async def google_login(payload: GoogleLoginRequest):
         # If user does not exist, create one
         if not user:
             new_user = User(email=email, name=name)
-            print("creating a new user")
             result = await mongo_user_repository.create_user(new_user)
             user_id = result["_id"]
         else:
