@@ -34,7 +34,6 @@ async def google_login(payload: GoogleLoginRequest):
             return {"status": "error", "message": "Failed to fetch Google tokens."}
 
         tokens = token_res.json()
-        print('Tokens:', tokens)
         idinfo = id_token.verify_oauth2_token(
             tokens["id_token"],
             google_requests.Request(),
@@ -55,7 +54,7 @@ async def google_login(payload: GoogleLoginRequest):
 
         # If user does not exist, create one
         if not user:
-            new_user = User(email=email, name=name)
+            new_user = User(email=email, name=name, tokens=tokens)
             result = await mongo_user_repository.create_user(new_user)
             user_id = result["_id"]
         else:

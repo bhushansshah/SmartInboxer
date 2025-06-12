@@ -3,17 +3,13 @@ import { useNavigate } from "react-router-dom";
 import GmailConnection  from "../components/GmailConnection";
 import AddLabelForm from "../components/AddLabelForm";
 import useLabels from "../hooks/useLabels";
+import useUser from "../hooks/useUser";
 import LabelsGrid from "../components/LabelsGrid";
 import EditLabelModal from "../components/EditLabelModal";
 
 export default function Home() {
     const [userInfo, setUserInfo] = useState(null);
-    // const [labels, setLabels] = useState([
-    //     { id: 1, name: "Important", color: "#EF4444", description: "Emails that need immediate attention" },
-    //     { id: 2, name: "Work", color: "#3B82F6", description: "Emails from colleagues and clients" },
-    //     { id: 3, name: "Personal", color: "#10B981", description: "Family, friends, and subscriptions" }
-    // ]);
-    // const [labelBeingEdited, setLabelBeingEdited] = useState(null);
+    const {user, updateUser} = useUser();
     const [labels, setLabels, labelBeingEdited, setLabelBeingEdited, addNewLabel, editLabel, delLabel] = useLabels();
     const [editModalOpen, setEditModalOpen] = useState(false);
 
@@ -66,7 +62,7 @@ export default function Home() {
             {/* Gmail + Labels */}
             <div className="max-w-[90%] mx-auto space-y-6">
 
-                <GmailConnection/>
+                <GmailConnection user={user} updateUser={updateUser}/>
 
                 {/* Labels Section */}
                 <div className="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 shadow-xl">

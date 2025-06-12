@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:8000/integrations";
+const API_URL = "http://localhost:8000/user";
 
 const getAuthHeaders = () => {
   const local_storage = localStorage.getItem("smart-inboxer"); // or from context/state
@@ -18,20 +18,11 @@ const getAuthHeaders = () => {
   };
 };
 
-export const connectGmail = async () => {
-    const response = await axios.post(`${API_URL}/connect/gmail`, {dummy: "data"}, {
+export const getUser = async () => {
+    const response = await axios.get(`${API_URL}`, {
         headers: getAuthHeaders(),
     });
 
-    console.log("Response from connectGmail: ", response.data);
-    return response.data;
-}
-
-export const disconnectGmail = async () => {
-    const response = await axios.post(`${API_URL}/disconnect/gmail`, {dummy: "data"}, {
-        headers: getAuthHeaders(),
-    });
-
-    console.log("Response from disconnectGmail: ", response.data);
+    console.log("Response from getUser: ", response.data);
     return response.data;
 }

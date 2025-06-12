@@ -1,14 +1,32 @@
-import { useState } from "react";
-import { connectGmail } from "../api/integrations";
-export default function GmailConnection() {
-    const [isGmailConnected, setIsGmailConnected] = useState(false);
+import { useState, useEffect } from "react";
+import { connectGmail, disconnectGmail } from "../api/integrations";
+
+export default function GmailConnection({user, updateUser}) {
+    console.log("GmailConnection component rendered with user:", user);
+    const [isGmailConnected, setIsGmailConnected] = useState(user?.isGmailConnected);
+    
+    useEffect(() => {
+        setIsGmailConnected(user?.isGmailConnected);
+    }, [user])
 
     const handleConnectGmail = async () => {
-        const response = await connectGmail();
-        if (response && response.status === "success") {
-            setIsGmailConnected(true);
-        } else {
-            alert("Failed to connect Gmail");
+        if(isGmailConnected){
+            const response = await disconnectGmail();
+            if (response && response.status === "success") {
+                setIsGmailConnected(false);
+                await updateUser(); // Update user state after disconnecting
+            } else {
+                alert("Failed to disconnect Gmail");
+            }
+        }
+        else{
+            const response = await connectGmail();
+            if (response && response.status === "success") {
+                setIsGmailConnected(true);
+                await updateUser(); // Update user state after connecting
+            } else {
+                alert("Failed to connect Gmail");
+            }
         }
     };
 
@@ -36,7 +54,7 @@ export default function GmailConnection() {
                     }`}
                 >
                     <span className="text-xl">🔗</span>
-                    {isGmailConnected ? "Connected ✓" : "Connect Gmail"}
+                    {isGmailConnected ? "Disconnect Gmail" : "Connect Gmail"}
                 </button>
             </div>
         </div>

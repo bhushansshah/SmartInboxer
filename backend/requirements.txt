@@ -11,3 +11,4 @@ python-jose
 httpx 
 google-auth
 requests
+google-api-python-client

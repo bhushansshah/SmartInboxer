@@ -34,11 +34,29 @@ class MongoUserRepository(UserRepository):
             
         return None
 
+    async def get_user_by_email(self, email: str) -> Optional[User]:
+        document = await self.collection.find_one({"email": email})
+        if document:
+            return User(**document)
+        return None
+
     async def get_all_users(self) -> List[User]:
         cursor = self.collection.find()
         users = []
         async for document in cursor:
             users.append(User(**document))
         return users
+
+    async def update_user(self, user_id: str, updated_user_data: dict) -> User:
+        update_data = updated_user_data
+        result = await self.collection.update_one({"_id": ObjectId(user_id)}, {"$set": update_data})
+        try :
+            if result.modified_count == 1:
+                updated_user = await self.get_user_by_id(user_id)
+                return updated_user
+            if result.matched_count == 0:
+                raise ValueError("User not updated.")
+        except Exception as e:
+            raise e
 
 mongo_user_repository = MongoUserRepository()
